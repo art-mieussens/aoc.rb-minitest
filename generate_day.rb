@@ -24,6 +24,8 @@ if Dir.exist? day_name
 end
 
 if Dir.mkdir day_name
+  puts "./#{day_name}"
+end
 Dir.chdir day_name
 
 day_template = ERB.new <<-EOF
@@ -43,16 +45,16 @@ EOF
 
 day_file = "#{day_name}.rb"
 if File.write day_file, day_template.result
-  puts day_file
+  puts "./#{day_name}/#{day_file}"
 end
 
 test_day_template = ERB.new <<-EOF
 require 'minitest/autorun'
-require_relative 'dayX'
+require_relative <%= day_name %>
 
-class TestDayX < Minitest::Test
+class TestDay<%= day_number %> < Minitest::Test
   def setup
-    @puzzle = Puzzle.new('dayX/input.txt')
+    @puzzle = Puzzle.new('<%= day_name %>/input.txt')
   end
 
   # def test_reads_input_file_and_initializes
@@ -70,5 +72,5 @@ EOF
 
 test_day_file = "test_#{day_name}.rb"
 if File.write test_day_file, test_day_template.result
-  puts test_day_file
+  puts "./#{day_name}/#{test_day_file}"
 end
