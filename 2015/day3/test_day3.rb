@@ -11,8 +11,8 @@ class TestDay3 < Minitest::Test
   end
 
   def test_input_should_be_a_single_string
-    assert @puzzle.input.class == String,
-      'input file should be a single string'
+    assert @puzzle.input.instance_of?(String),
+           'input file should be a single string'
   end
 
   def test_counts_houses_visited
@@ -50,7 +50,7 @@ class TestDay3 < Minitest::Test
 
     @puzzle.travel
     assert_equal expected, @puzzle.houses_visited,
-                'Instructions incorrectly parsed'
+                           'Instructions incorrectly parsed'
 
     # case 2
     @puzzle.input = '^>v<'
@@ -84,6 +84,12 @@ class TestDay3 < Minitest::Test
     assert_equal expected, @puzzle.houses_visited,
                  'Instructions incorrectly parsed'
   end
+end
+
+class TestDay3b < Minitest::Test
+  def setup
+    @puzzle = Puzzle.new('day3/input.txt')
+  end
 
   def test_counts_houses_visited_by_both
     # case 1
@@ -115,60 +121,59 @@ class TestDay3 < Minitest::Test
   end
 
   def test_travel_both_parses_instructions
-        # case 1
-        @puzzle.input = '^v'
-        @puzzle.houses_visited_by_santa = []
-        @puzzle.houses_visited_by_robot = []
-        expected_santa = [[0, 0],
-                          [0 ,1]]
-        expected_robot = [[0, 0],
-                          [0 ,-1]]
-    
-        @puzzle.travel_both
-        assert_equal expected_santa, @puzzle.houses_visited_by_santa,
-                    'Instructions incorrectly parsed'
-        assert_equal expected_robot, @puzzle.houses_visited_by_robot,
-                    'Instructions incorrectly parsed'
-    
-        # case 2
-        @puzzle.input = '^>v<'
-        @puzzle.houses_visited_by_santa = []
-        @puzzle.houses_visited_by_robot = []
-        expected_santa = [[0, 0],
-                          [0 ,1],
-                          [0, 0]]
-        expected_robot =  [[0, 0],
-                           [1, 0],
-                           [0, 0]]
-    
-        @puzzle.travel_both
-        assert_equal expected_santa, @puzzle.houses_visited_by_santa,
-                    'Instructions incorrectly parsed'
-        assert_equal expected_robot, @puzzle.houses_visited_by_robot,
-                    'Instructions incorrectly parsed'
-    
-        # case 3
-        @puzzle.input = '^v^v^v^v^v'
-        @puzzle.houses_visited_by_santa = []
-        @puzzle.houses_visited_by_robot = []
-        expected_santa = [[0, 0],
-                          [0, 1],
-                          [0, 2],
-                          [0, 3],
-                          [0, 4],
-                          [0, 5]]
-        expected_robot = [[0, 0],
-                          [0, -1],
-                          [0, -2],
-                          [0, -3],
-                          [0, -4],
-                          [0, -5]]
-    
-        @puzzle.travel_both
-        assert_equal expected_santa, @puzzle.houses_visited_by_santa,
-                    'Instructions incorrectly parsed'
-        assert_equal expected_robot, @puzzle.houses_visited_by_robot,
-                    'Instructions incorrectly parsed'
-  end
+    # case 1
+    @puzzle.input = '^v'
+    @puzzle.houses_visited_by_santa = []
+    @puzzle.houses_visited_by_robot = []
+    expected_santa = [[0, 0],
+                      [0, 1]]
+    expected_robot = [[0, 0],
+                      [0, -1]]
 
+    @puzzle.travel_both
+    assert_equal expected_santa, @puzzle.houses_visited_by_santa,
+                 'Instructions incorrectly parsed'
+    assert_equal expected_robot, @puzzle.houses_visited_by_robot,
+                 'Instructions incorrectly parsed'
+
+    # case 2
+    @puzzle.input = '^>v<'
+    @puzzle.houses_visited_by_santa = []
+    @puzzle.houses_visited_by_robot = []
+    expected_santa = [[0, 0],
+                      [0, 1],
+                      [0, 0]]
+    expected_robot = [[0, 0],
+                      [1, 0],
+                      [0, 0]]
+
+    @puzzle.travel_both
+    assert_equal expected_santa, @puzzle.houses_visited_by_santa,
+                 'Instructions incorrectly parsed'
+    assert_equal expected_robot, @puzzle.houses_visited_by_robot,
+                 'Instructions incorrectly parsed'
+
+    # case 3
+    @puzzle.input = '^v^v^v^v^v'
+    @puzzle.houses_visited_by_santa = []
+    @puzzle.houses_visited_by_robot = []
+    expected_santa = [[0, 0],
+                      [0, 1],
+                      [0, 2],
+                      [0, 3],
+                      [0, 4],
+                      [0, 5]]
+    expected_robot = [[0, 0],
+                      [0, -1],
+                      [0, -2],
+                      [0, -3],
+                      [0, -4],
+                      [0, -5]]
+
+    @puzzle.travel_both
+    assert_equal expected_santa, @puzzle.houses_visited_by_santa,
+                 'Instructions incorrectly parsed'
+    assert_equal expected_robot, @puzzle.houses_visited_by_robot,
+                 'Instructions incorrectly parsed'
+  end
 end
